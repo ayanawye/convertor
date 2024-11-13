@@ -1,0 +1,20 @@
+@use 'lib';
+
+:root{
+  --fg-black: #000;
+  --fg-white: #fff;
+  --fg-grey: #273043;
+}
+
+* {
+  transition: 0.2s;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.active_link {
+  transform: scale(1.1);
+  color: var(--fg-black);
+}
