@@ -1,12 +1,12 @@
-import React, {FC} from "react";
-import {NavLink, Outlet} from "react-router-dom";
+import React, { FC } from "react";
+import { Outlet } from "react-router-dom";
+import { Header } from "../../../shared/ui";
 
 export const RootLayout: FC = () => {
-    return (
-        <div>
-            <NavLink to='/'>Convertor</NavLink>
-            <NavLink to='/currencies'>Currencies</NavLink>
-            <Outlet/>
-        </div>
-    )
-}
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
+};

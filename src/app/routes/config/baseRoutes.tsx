@@ -1,18 +1,36 @@
-import React from "react";
-import {Convertor} from "../../../pages/convertor";
-import {AllCurrencies} from "../../../pages/allCurrencies";
+import React, { lazy, Suspense } from "react";
+
+const Convertor = lazy(() =>
+  import("../../../pages/convertor").then((module) => ({
+    default: module.Convertor,
+  })),
+);
+
+const AllCurrencies = lazy(() =>
+  import("../../../pages/allCurrencies").then((module) => ({
+    default: module.AllCurrencies,
+  })),
+);
 
 export const BASE_ROUTES = [
-    {
-        path: "/",
-        element: <Convertor/>,
-    },
-    {
-        path: "currencies",
-        element: <AllCurrencies/>,
-    },
-    {
-        path: "*",
-        element: (<div>No page!</div>),
-    }
-]
+  {
+    path: "/",
+    element: (
+      <Suspense>
+        <Convertor />
+      </Suspense>
+    ),
+  },
+  {
+    path: "currencies",
+    element: (
+      <Suspense>
+        <AllCurrencies />
+      </Suspense>
+    ),
+  },
+  {
+    path: "*",
+    element: <div>No page!</div>,
+  },
+];
