@@ -1,0 +1,12 @@
+.header{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+  margin-top: 20px;
+
+   .link{
+     color: var(--fg-grey);
+     text-decoration: none;
+   }
+}
