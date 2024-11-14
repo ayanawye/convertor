@@ -1,5 +1,5 @@
-import { TextField } from "@mui/material";
 import { FC } from "react";
+import TextField from "@mui/material/TextField";
 
 interface Props {
   disabled?: boolean;
@@ -7,11 +7,9 @@ interface Props {
   setValue?: (value: string) => void | undefined;
 }
 
-export const EnterCurrencyInput: FC<Props> = ({
-  disabled,
-  value,
-  setValue = () => {},
-}) => {
+export const EnterCurrencyInput: FC<Props> = (props) => {
+  const { disabled, value, setValue = () => {},} = props;
+
   return (
     <TextField
       disabled={disabled}

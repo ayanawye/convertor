@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import Grid from "@mui/material/Grid2";
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   marginTop?: number;
   spacing: number;
   children?: React.ReactNode;
+  className?: string;
 }
 
 export const GridContainer: FC<Props> = (props) => {

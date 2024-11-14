@@ -1,44 +1,36 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Autocomplete, TextField } from "@mui/material";
-import { IFormatedCurrency } from "../../interfaces";
-import { useAppSelector } from "../../../app/redux/hooks";
-import { currenciesSelector } from "../../../entities/currency";
-import { getDefaultCurrency } from "../../../features/baseCurrencySelect";
+import { IFormatedCurrency } from "shared/interfaces";
 
 interface Props {
   label?: string;
   options: IFormatedCurrency[];
-  handleChange: (currency: IFormatedCurrency | null) => void;
-  width?: number;
+  defaultValue: IFormatedCurrency;
+  handleChange: (currency: IFormatedCurrency) => void;
+  width: number;
 }
 
-export const DefaultSelect: FC<Props> = ({
-  label,
-  handleChange,
-  options,
-  width,
-}) => {
-  const { baseCurrency } = useAppSelector(currenciesSelector);
+export const DefaultSelect: FC<Props> = (props) => {
+  const {label, handleChange, options, width, defaultValue} = props;
 
   return (
     <div className="select">
       <Autocomplete
         disablePortal
         disableClearable
-        value={baseCurrency}
-        defaultValue={baseCurrency}
+        value={defaultValue}
         id="controllable-states-demo"
         options={options}
         sx={{
-          width: width || 300,
+          width: width,
           height: 48,
           "& .MuiInputBase-root": {
             height: 48,
             minHeight: 48,
           },
         }}
-        onChange={(_, newValue: IFormatedCurrency | null) => {
-          handleChange(newValue || null);
+        onChange={(_, newValue: IFormatedCurrency) => {
+          handleChange(newValue || {value: 0, label: ''});
         }}
         renderInput={(params) => <TextField {...params} label={label} />}
       />

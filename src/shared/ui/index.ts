@@ -3,3 +3,4 @@ export { EnterCurrencyInput } from "./fields/EnterCurrencyInput/EnterCurrencyInp
 export { DefaultList } from "./lists/DefaultList/DefaultList";
 export { DefaultSelect } from "./select/DefaultSelect";
 export { GridContainer } from "./grid/GridContainer";
+export { Loading } from './loader/Loading';
