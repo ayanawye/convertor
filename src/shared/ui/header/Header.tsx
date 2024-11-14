@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
-import s from "./Header.module.scss";
 import classNames from "classnames";
+import s from "./Header.module.scss";
 
 export const Header: FC = () => {
   return (
