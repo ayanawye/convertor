@@ -1,42 +1,33 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import Grid from "@mui/material/Grid2";
-import {
-  BaseCurrencySelect,
-  currenciesFormated,
-} from "../../../features/baseCurrencySelect";
-import { DefaultList, GridContainer } from "../../../shared/ui";
-import { useAppDispatch, useAppSelector } from "../../../app/redux/hooks";
-import {
-  currenciesSelector,
-  getAllCurrencies,
-} from "../../../entities/currency";
-import { IFormatedCurrency } from "../../../shared/interfaces";
+import { DefaultList, GridContainer } from "shared/ui";
+import { useAppDispatch, useAppSelector } from "app/redux/hooks";
+import { currenciesSelector, getAllCurrencies } from "entities/currency";
+import { BaseCurrencySelect } from "features/baseCurrencySelect";
+import {Loading} from "shared/ui";
+import s from './CurrenciesList.module.scss';
 
 export const CurrenciesList: FC = () => {
   const dispatch = useAppDispatch();
-  const [formatedCurrencies, setFormatedCurrencies] = useState<
-    IFormatedCurrency[]
-  >([]);
-  const { baseRateCurrencies, isBaseCurrencyLoading, currencies } =
-    useAppSelector(currenciesSelector);
+  const { baseRateCurrencies, isBaseCurrencyLoading, isLoading } = useAppSelector(currenciesSelector);
 
   useEffect(() => {
     dispatch(getAllCurrencies());
   }, []);
 
-  useEffect(() => {
-    setFormatedCurrencies(currenciesFormated(baseRateCurrencies));
-  }, [currencies, baseRateCurrencies]);
+  if (isLoading) {
+      return <Loading />;
+  }
 
   return (
-    <GridContainer justifyContent={"center"} marginTop={4} spacing={2}>
-      <Grid size={5}>
+    <GridContainer className={s.currencies} justifyContent={"center"} spacing={2}>
+      <Grid display={'contents'} size={5}>
         <BaseCurrencySelect />
       </Grid>
-      <Grid size={4}>
+      <Grid height={'70vh'} overflow={'scroll'} size={7}>
         <DefaultList
           loading={isBaseCurrencyLoading}
-          list={formatedCurrencies}
+          list={baseRateCurrencies}
         />
       </Grid>
     </GridContainer>

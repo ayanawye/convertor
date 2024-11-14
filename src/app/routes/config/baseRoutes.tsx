@@ -1,13 +1,13 @@
 import React, { lazy, Suspense } from "react";
 
 const Convertor = lazy(() =>
-  import("../../../pages/convertor").then((module) => ({
+  import("pages/convertor").then((module) => ({
     default: module.Convertor,
   })),
 );
 
 const AllCurrencies = lazy(() =>
-  import("../../../pages/allCurrencies").then((module) => ({
+  import("pages/allCurrencies").then((module) => ({
     default: module.AllCurrencies,
   })),
 );

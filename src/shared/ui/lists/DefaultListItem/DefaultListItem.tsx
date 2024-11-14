@@ -1,14 +1,17 @@
 import React, { FC } from "react";
 import { ListItem, ListItemText } from "@mui/material";
+import s from "./DefaultListItem.module.scss";
 
 interface Props {
-  text: string;
+  currency: string;
+  nominal: number;
 }
 
-export const DefaultListItem: FC<Props> = ({ text }) => {
+export const DefaultListItem: FC<Props> = ({ currency, nominal }) => {
   return (
-    <ListItem disablePadding>
-      <ListItemText primary={text} />
+    <ListItem disablePadding className={s.listItem}>
+        <ListItemText primary={nominal} />
+        <ListItemText primary={currency} />
     </ListItem>
   );
 };

@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { IInitialState } from "./types";
+import { RootState } from "app/redux/hooks";
 import { getAllCurrencies, getBaseRateCurrencies } from "../api/requests";
-import { RootState } from "../../../app/redux/hooks";
+import {formatCurrencies} from "features/baseCurrencySelect";
+import {BASE_FROM_CURRENCY} from "shared/constants";
 
 const initialState: IInitialState = {
-  currencies: {},
+  currencies: [],
   isLoading: false,
   error: "",
-  baseCurrency: { value: 0, label: "USD" },
-  baseRateCurrencies: {},
+  baseCurrency: BASE_FROM_CURRENCY,
+  baseRateCurrencies: [],
   isBaseCurrencyLoading: false,
   errorBaseCurrency: "",
 };
@@ -24,7 +27,7 @@ export const currencySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllCurrencies.fulfilled, (state, action) => {
-        state.currencies = action.payload.conversion_rates;
+        state.currencies = formatCurrencies(action.payload.conversion_rates);
         state.isLoading = false;
         state.error = "";
       })
@@ -39,7 +42,7 @@ export const currencySlice = createSlice({
 
     builder
       .addCase(getBaseRateCurrencies.fulfilled, (state, action) => {
-        state.baseRateCurrencies = action.payload.conversion_rates;
+        state.baseRateCurrencies = formatCurrencies(action.payload.conversion_rates);
         state.isBaseCurrencyLoading = false;
         state.errorBaseCurrency = "";
       })

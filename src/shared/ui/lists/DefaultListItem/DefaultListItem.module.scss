@@ -1,0 +1,11 @@
+.listItem {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  justify-content: start;
+  border-bottom: 1px solid var(--fg-grey);
+  padding: 10px 20px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import { List } from "@mui/material";
+import List from "@mui/material/List";
 import { DefaultListItem } from "../DefaultListItem/DefaultListItem";
-import { IFormatedCurrency } from "../../../interfaces";
+import { IFormatedCurrency } from "shared/interfaces";
+import s from './DefaultList.module.scss';
 
 interface Props {
   list: IFormatedCurrency[];
@@ -16,10 +17,11 @@ export const DefaultList: FC<Props> = ({ list, loading }) => {
   }
 
   return (
-    <List>
-      {list.map((item, index) => (
+    <List className={s.list}>
+      {list.map(({ label, value }, index) => (
         <DefaultListItem
-          text={`${item.value} ${item.label.toLowerCase()}`}
+          currency={label}
+          nominal={value}
           key={index}
         />
       ))}
