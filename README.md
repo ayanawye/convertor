@@ -2,10 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Intro
-This project is used to convert currency
+## Deploy
 
-## locally run the project
+[Convertor](https://convertor-ebon.vercel.app/)
+
+## Intro
+
+This project is used to convert currency with no adaprive styles
+
+## Locally run the project
+git clone https://github.com/ayanawye/git-profile.git - copy project
+### `npm install`
 
 ### `npm start`
 
