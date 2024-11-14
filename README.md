@@ -11,7 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This project is used to convert currency with no adaprive styles
 
 ## Locally run the project
-git clone https://github.com/ayanawye/git-profile.git - copy project
+git clone https://github.com/ayanawye/convertor.git - copy project
 ### `npm install`
 
 ### `npm start`
