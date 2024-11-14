@@ -12,7 +12,7 @@ export const getConversionRate = createAsyncThunk<
   async ({fromCurrency, toCurrency }, { rejectWithValue }) => {
     try {
       const resp = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/pair/${fromCurrency}/${toCurrency}`,
+        `${process.env.REACT_APP_BASE_API_URL}${process.env.REACT_APP_API_KEY}/pair/${fromCurrency}/${toCurrency}`,
       );
       return resp.data;
     } catch (error) {
