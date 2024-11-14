@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import AppRouter from "./app/routes";
-import "../src/shared/style/index.scss";
 import { Provider } from "react-redux";
-import store from "./app/redux/store";
+
+import AppRouter from "app/routes";
+import store from "app/redux/store";
+import "shared/style/index.scss";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

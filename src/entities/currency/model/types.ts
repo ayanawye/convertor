@@ -1,11 +1,11 @@
-import { ICurrency, IFormatedCurrency } from "../../../shared/interfaces";
+import { IFormatedCurrency } from "shared/interfaces";
 
 export interface IInitialState {
-  currencies: ICurrency;
+  currencies: IFormatedCurrency[];
   isLoading: boolean;
   error: string;
   baseCurrency: IFormatedCurrency;
-  baseRateCurrencies: ICurrency;
+  baseRateCurrencies: IFormatedCurrency[];
   isBaseCurrencyLoading: boolean;
   errorBaseCurrency: string;
 }

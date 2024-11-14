@@ -1,70 +1,75 @@
 import React, { useEffect, useState } from "react";
-import {
-  DefaultSelect,
-  EnterCurrencyInput,
-  GridContainer,
-} from "../../../shared/ui";
-import Grid from "@mui/material/Grid2";
-import { useAppDispatch, useAppSelector } from "../../../app/redux/hooks";
-import {
-  currenciesSelector,
-  getAllCurrencies,
-} from "../../../entities/currency";
-import { IFormatedCurrency } from "../../../shared/interfaces";
-import { currenciesFormated } from "../../../features/baseCurrencySelect";
+
+import { IFormatedCurrency } from "shared/interfaces";
+import { useAppDispatch, useAppSelector } from "app/redux/hooks";
+import { currenciesSelector, getAllCurrencies } from "entities/currency";
+import {ConvertCurrencyBlock, useConversionRate} from "features/convertCurrencyBlock";
+import {BASE_FROM_CURRENCY, BASE_FROM_INPUT, BASE_TO_CURRENCY, BASE_TO_INPUT} from "shared/constants";
+import s from './Conversion.module.scss';
 
 export const Conversion = () => {
   const dispatch = useAppDispatch();
-  const [initialValue, setInitialValue] = useState("");
-  const [equivalentValue] = useState("");
-  const [initialCurrency, setInitialCurrency] =
-    useState<IFormatedCurrency | null>(null);
-  const [equivalentCurrency, setEquivalentCurrency] =
-    useState<IFormatedCurrency | null>(null);
   const { currencies } = useAppSelector(currenciesSelector);
-  const [formatedCurrencies, setFormatedCurrencies] = useState<
-    IFormatedCurrency[]
-  >([]);
+
+  const [fromInput, setFromInput] = useState<string>(BASE_FROM_INPUT);
+  const [toInput, setToInput] = useState<string>(BASE_TO_INPUT);
+  const [fromCurrency, setFromCurrency] = useState<IFormatedCurrency>(BASE_FROM_CURRENCY);
+  const [toCurrency, setToCurrency] = useState<IFormatedCurrency>(BASE_TO_CURRENCY);
+
+  const { conversionRate } = useConversionRate({
+    fromCurrency: fromCurrency.label,
+    toCurrency: toCurrency.label,
+  });
+
+  const handleChangeFromInput = (value: string) => {
+    const price = Number(value);
+    setFromInput(value);
+    const targetValue =
+          price && conversionRate
+              ? (price * conversionRate).toFixed(2)
+              : null;
+    setToInput(targetValue || '');
+  }
+
+  const handleChangeToInput = (value: string) => {
+    const price = Number(value);
+    setToInput(value);
+    const baseValue =
+        value && conversionRate
+            ? (price / conversionRate).toFixed(2)
+            : null;
+    setFromInput(baseValue || '');
+  }
+
+  const setDefaultValues = () => {
+    setFromInput(BASE_FROM_INPUT);
+    setToInput(BASE_TO_INPUT);
+  };
+
+  const onBaseCodeChange = (value: IFormatedCurrency) => {
+    setDefaultValues();
+    setFromCurrency(value);
+  };
+
+  const onTargetCodeChange = (value: IFormatedCurrency) => {
+    setDefaultValues();
+    setToCurrency(value);
+  };
 
   useEffect(() => {
-    setFormatedCurrencies(currenciesFormated(currencies));
-  }, [currencies]);
-
-  useEffect(() => {
-    dispatch(getAllCurrencies());
+    dispatch(getAllCurrencies())
   }, []);
 
+  useEffect(() => {
+    if (conversionRate) {
+      setToInput((Number(fromInput) * conversionRate).toFixed(2));
+    }
+  }, [conversionRate]);
+
   return (
-    <>
-      <GridContainer
-        marginBottom={4}
-        marginTop={4}
-        justifyContent={"center"}
-        spacing={2}
-      >
-        <Grid size={4}>
-          <EnterCurrencyInput value={initialValue} setValue={setInitialValue} />
-        </Grid>
-        <Grid size={4}>
-          <DefaultSelect
-            options={formatedCurrencies}
-            handleChange={setInitialCurrency}
-            label="Initial currency"
-          />
-        </Grid>
-      </GridContainer>
-      <GridContainer justifyContent={"center"} spacing={2}>
-        <Grid size={4}>
-          <EnterCurrencyInput disabled value={equivalentValue} />
-        </Grid>
-        <Grid size={4}>
-          <DefaultSelect
-            options={formatedCurrencies}
-            handleChange={setEquivalentCurrency}
-            label="The equivalent"
-          />
-        </Grid>
-      </GridContainer>
-    </>
+        <div className={s.conversion}>
+          <ConvertCurrencyBlock value={fromInput} onChangeValue={handleChangeFromInput} allCurrencies={currencies} currency={fromCurrency} onChangeCurrency={onBaseCodeChange} selectTitle='Initial currency' />
+          <ConvertCurrencyBlock value={toInput} onChangeValue={handleChangeToInput} allCurrencies={currencies} currency={toCurrency} onChangeCurrency={onTargetCodeChange} selectTitle='The equivalent'/>
+        </div>
   );
 };
